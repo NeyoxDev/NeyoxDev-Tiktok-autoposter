@@ -22,6 +22,7 @@ public class TikTokLogin {
 
     public void login(WebDriver browser) throws LoginException {
         if (type == LoginType.FACEBOOK){
+            System.out.println("Login to " + mail);
             WebElement facebook = browser.findElement(By.cssSelector(".channel-item-wrapper-2gBWB+.channel-item-wrapper-2gBWB+.channel-item-wrapper-2gBWB .channel-name-2qzLW"));
             facebook.click();
             WebDriver login = getFacebookPage(browser);
@@ -30,6 +31,7 @@ public class TikTokLogin {
             login.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             if (login.findElements(By.tagName("button")).size() >=2)login.findElements(By.tagName("button")).get(1).click();
             login.findElements(By.tagName("input")).stream().filter(buttons -> buttons.getAttribute("name").equals("login")).findFirst().orElse(null).click();
+            System.out.println("Login !");
 
         }
     }
@@ -40,6 +42,7 @@ public class TikTokLogin {
         try {
             WebDriver login = browser.switchTo().window(browser.getWindowHandles().toArray(new String[]{})[1]);
             if (login != null && login.getCurrentUrl().contains("facebook")){
+                System.out.println("Facebook login panel find !");
                 return login;
             }else{
                 throw new LoginException("Failed to find facebook login page");
